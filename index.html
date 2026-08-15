@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Living | Trade & Contract Furniture</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MQCVGGZW');</script>
+
+
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-225QKEXB8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-225QKEXB8T'); -->
+</script>
+    <!-- End Google Tag Manager -->
+
+    <style>
+        :root {
+            --primary: #2C2C2C;
+            --accent: #A3866E;
+            --bg: #F9F8F6;
+            --card-bg: #FFFFFF;
+            --text: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eaeaea;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .trade-btn {
+            background: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: opacity 0.2s;
+        }
+
+        .trade-btn:hover {
+            opacity: 0.9;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px 60px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Bulk Quote Form Styles */
+        .quote-section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: #fafafa;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent);
+        }
+
+        .success-message {
+            display: none;
+            background: #e6f4ea;
+            color: #137333;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+            background: var(--card-bg);
+            margin-top: 60px;
+        }
+
+        @media(max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQCVGGZW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager -->
+
+    <header>
+        <div class="logo">LUMINA CONTRACT</div>
+        <div class="nav-links">
+            <a href="#collections">Collections</a>
+            <a href="#quote-form" class="trade-btn">Request Trade Quote</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Bespoke Furniture & Contract Supply</h1>
+        <p>Partnering with interior designers and property developers for commercial and residential projects.</p>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title" id="collections">Featured Contract Collections</h2>
+        <div class="product-grid" id="product-grid">
+            <!-- Products injected via JavaScript -->
+        </div>
+
+        <!-- Bulk Order & Trade Quotation Form -->
+        <div class="quote-section" id="quote-form">
+            <h2 class="section-title" style="margin-bottom: 10px;">Request Bulk Order / Trade Quote</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">Fill out the details below for trade pricing, custom specifications, or project estimates.</p>
+            
+            <div id="success-banner" class="success-message">
+                Thank you! Your quotation request has been submitted successfully. Our trade team will contact you within 24 hours.
+            </div>
+
+            <form id="tradeQuoteForm" onsubmit="handleQuoteSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required placeholder="Jane Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Business Email *</label>
+                        <input type="email" id="email" required placeholder="jane@studio.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="companyType">I am a... *</label>
+                        <select id="companyType" required>
+                            <option value="">Select profession</option>
+                            <option value="Interior Designer">Interior Designer</option>
+                            <option value="Property Developer">Property Developer</option>
+                            <option value="Architect">Architect</option>
+                            <option value="Hospitality / Commercial">Hospitality / Commercial Buyer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName">Company / Studio Name</label>
+                        <input type="text" id="companyName" placeholder="Studio Design Co.">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedProduct">Interested Collection / Item</label>
+                        <select id="selectedProduct">
+                            <option value="General Inquiry">General Catalog / Multiple Items</option>
+                            <option value="Nordic Minimalist Sofa">Nordic Minimalist Sofa</option>
+                            <option value="Ergonomic Wood Lounge Chair">Ergonomic Wood Lounge Chair</option>
+                            <option value="Walnut Coffee Table">Walnut Coffee Table</option>
+                            <option value="Modern Minimalist Bookshelf">Modern Minimalist Bookshelf</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="estimatedQuantity">Estimated Quantity *</label>
+                        <input type="number" id="estimatedQuantity" min="1" required placeholder="e.g., 15">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="projectDetails">Project Timeline & Specifications</label>
+                        <textarea id="projectDetails" rows="4" placeholder="Share specific dimensions, finish preferences, target delivery dates, or project scope..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Submit Quotation Request</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Lumina Contract. B2B Practice Portal for GTM/GA4 Tracking.
+    </footer>
+
+    <script>
+        // Sample Trade Furniture Products Data
+        const products = [
+            {
+                id: "F001",
+                name: "Nordic Minimalist Sofa",
+                price: "Trade Price on Request",
+                image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "F002",
+                name: "Ergonomic Wood Lounge Chair",
+                price: "Trade Price on Request",
+                image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "F003",
+                name: "Walnut Coffee Table",
+                price: "Trade Price on Request",
+                image: "https://images.unsplash.com/photo-1619911013257-8f1fbc919fc9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            {
+                id: "F004",
+                name: "Modern Minimalist Bookshelf",
+                price: "Trade Price on Request",
+                image: "https://images.unsplash.com/photo-1708161885729-63faff807840?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
+        ];
+
+        // Render Product Cards
+        const grid = document.getElementById('product-grid');
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <div>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">${product.price}</div>
+                    </div>
+                    <a href="#quote-form" style="color: var(--accent); font-weight: 600; font-size: 0.9rem; text-decoration: none;" onclick="selectProductForQuote('${product.name}')">Request Spec & Quote &rarr;</a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Helper to auto-select item in dropdown when clicked from card
+        function selectProductForQuote(productName) {
+            document.getElementById('selectedProduct').value = productName;
+        }
+
+        // Handle Form Submission and DataLayer push
+        function handleQuoteSubmit(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const companyType = document.getElementById('companyType').value;
+            const companyName = document.getElementById('companyName').value;
+            const product = document.getElementById('selectedProduct').value;
+            const quantity = document.getElementById('estimatedQuantity').value;
+
+            // Push custom B2B lead event to dataLayer for GTM/GA4 tracking
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "trade_quote_submitted",
+                b2b_lead: {
+                    profession: companyType,
+                    company: companyName || "Not Provided",
+                    item_interest: product,
+                    estimated_qty: parseInt(quantity)
+                }
+            });
+
+            console.log("Tracked: trade_quote_submitted event for", companyType);
+
+            // Show success notification & reset form
+            document.getElementById('tradeQuoteForm').reset();
+            document.getElementById('success-banner').style.display = 'block';
+            
+            // Scroll slightly to show success message
+            document.getElementById('success-banner').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
