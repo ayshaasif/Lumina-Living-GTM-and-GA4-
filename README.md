@@ -23,4 +23,4 @@ A responsive web application and digital storefront designed for B2B procurement
 * **Deployment & Hosting:** Vercel Cloud Platform, Git/GitHub Version Control
 
 
-#### **Visit the Lumina Living :** (www.luminaliving.com)[https://lumina-living-tau.vercel.app/]
+#### **Visit the Lumina Living :** [www.luminaliving.com](https://lumina-living-tau.vercel.app/)
