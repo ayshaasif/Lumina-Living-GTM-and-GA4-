@@ -58,19 +58,20 @@
                 Thank you! Your quotation request has been submitted successfully. Our trade team will contact you within 24 hours.
             </div>
 
-            <form id="tradeQuoteForm" onsubmit="handleQuoteSubmit(event)">
+            <!-- Form configured with SheetMonkey endpoint -->
+            <form id="tradeQuoteForm" action="https://api.sheetmonkey.io/form/Nu3PFgGXQ5w47ZAGmKwp4" onsubmit="handleQuoteSubmit(event)">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="fullName">Full Name *</label>
-                        <input type="text" id="fullName" required placeholder="Jane Doe">
+                        <input type="text" id="fullName" name="fullName" required placeholder="Jane Doe">
                     </div>
                     <div class="form-group">
                         <label for="email">Business Email *</label>
-                        <input type="email" id="email" required placeholder="jane@studio.com">
+                        <input type="email" id="email" name="email" required placeholder="jane@studio.com">
                     </div>
                     <div class="form-group">
                         <label for="companyType">I am a... *</label>
-                        <select id="companyType" required>
+                        <select id="companyType" name="companyType" required>
                             <option value="">Select profession</option>
                             <option value="Interior Designer">Interior Designer</option>
                             <option value="Property Developer">Property Developer</option>
@@ -80,11 +81,11 @@
                     </div>
                     <div class="form-group">
                         <label for="companyName">Company / Studio Name</label>
-                        <input type="text" id="companyName" placeholder="Studio Design Co.">
+                        <input type="text" id="companyName" name="companyName" placeholder="Studio Design Co.">
                     </div>
                     <div class="form-group">
                         <label for="selectedProduct">Interested Collection / Item</label>
-                        <select id="selectedProduct">
+                        <select id="selectedProduct" name="selectedProduct">
                             <option value="General Inquiry">General Catalog / Multiple Items</option>
                             <option value="Nordic Minimalist Sofa">Nordic Minimalist Sofa</option>
                             <option value="Ergonomic Wood Lounge Chair">Ergonomic Wood Lounge Chair</option>
@@ -94,14 +95,14 @@
                     </div>
                     <div class="form-group">
                         <label for="estimatedQuantity">Estimated Quantity *</label>
-                        <input type="number" id="estimatedQuantity" min="1" required placeholder="e.g., 15">
+                        <input type="number" id="estimatedQuantity" name="estimatedQuantity" min="1" required placeholder="e.g., 15">
                     </div>
                     <div class="form-group full-width">
                         <label for="projectDetails">Project Timeline & Specifications</label>
-                        <textarea id="projectDetails" rows="4" placeholder="Share specific dimensions, finish preferences, target delivery dates, or project scope..."></textarea>
+                        <textarea id="projectDetails" name="projectDetails" rows="4" placeholder="Share specific dimensions, finish preferences, target delivery dates, or project scope..."></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">Submit Quotation Request</button>
+                <button type="submit" id="submitBtn" class="btn-submit">Submit Quotation Request</button>
             </form>
         </div>
     </main>
@@ -139,14 +140,11 @@
             }
         ];
 
-        // Render Product Cards with individual WhatsApp share buttons featuring SVG logo
-
-
+        // Render Product Cards
         const grid = document.getElementById('product-grid');
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            // Attach data attributes so the observer can read product metadata
             card.setAttribute('data-product-id', product.id);
             card.setAttribute('data-product-name', product.name);
             card.setAttribute('data-product-price', product.price);
@@ -171,14 +169,14 @@
             grid.appendChild(card);
         });
 
-        // 2. IntersectionObserver for Custom Event Impression Tracking
+        // IntersectionObserver for Impression Tracking
         document.addEventListener("DOMContentLoaded", function () {
             if (!('IntersectionObserver' in window)) return;
 
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.5 // Fires when card is 50% visible in viewport
+                threshold: 0.5
             };
 
             const observer = new IntersectionObserver((entries, observerInstance) => {
@@ -189,7 +187,6 @@
                         const productName = card.getAttribute('data-product-name');
                         const productPrice = card.getAttribute('data-product-price');
 
-                        // Push custom impression event to GTM dataLayer
                         window.dataLayer = window.dataLayer || [];
                         window.dataLayer.push({
                             event: "listing_impression",
@@ -202,18 +199,17 @@
                             }
                         });
 
-                        // Stop observing once tracked so it only fires once per session scroll
                         observerInstance.unobserve(card);
                     }
                 });
             }, observerOptions);
 
-            // Bind the observer to all rendered product cards
             document.querySelectorAll('.product-card').forEach(card => {
                 observer.observe(card);
             });
         });
-        // 1. Function to auto-populate product name when clicking 'Request Spec & Quote' on a card
+
+        // Auto-populate product name when clicking 'Request Spec & Quote'
         function selectProductForQuote(productName) {
             const productInput = document.getElementById('selectedProduct');
             if (productInput) {
@@ -221,13 +217,13 @@
             }
         }
 
-        // 2. Named submission handler matching onsubmit="handleQuoteSubmit(event)"
+        // Form submission handler
         async function handleQuoteSubmit(event) {
             event.preventDefault();
             
             const form = event.target;
-            const submitBtn = form.querySelector('#submitBtn') || document.getElementById('submitBtn');
-            const statusMsg = document.getElementById('formStatus');
+            const submitBtn = document.getElementById('submitBtn');
+            const statusMsg = document.getElementById('success-banner');
             const productNameVal = document.getElementById('selectedProduct').value;
             const userEmailVal = document.getElementById('email').value;
 
@@ -248,11 +244,10 @@
                     if (statusMsg) {
                         statusMsg.style.display = 'block';
                         statusMsg.style.color = 'green';
-                        statusMsg.textContent = 'Thank you! Your quote request has been saved to Google Sheets successfully.';
+                        statusMsg.textContent = 'Thank you! Your quote request has been saved successfully.';
                     }
                     form.reset();
 
-                    // Push Custom Conversion Event to GTM / GA4 DataLayer
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         event: "trade_quote_submitted",
@@ -263,7 +258,7 @@
                     });
 
                 } else {
-                if (statusMsg) {
+                    if (statusMsg) {
                         statusMsg.style.display = 'block';
                         statusMsg.style.color = 'red';
                         statusMsg.textContent = 'Oops! There was a problem submitting your form.';
@@ -279,14 +274,13 @@
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Submit Quote Request';
+                    submitBtn.textContent = 'Submit Quotation Request';
                 }
             }
         }
         
-        // Individual Product WhatsApp Share & GTM Event Handler
+        // WhatsApp Share & GTM Event Handler
         function shareProductOnWhatsApp(productId, productName, productPrice) {
-            // Push custom event to dataLayer for GTM/GA4 tracking
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: "share_on_whatsapp",
@@ -297,13 +291,7 @@
                 }
             });
 
-            console.log("Tracked: share_on_whatsapp event for product", productName);
-
-            // 2. Define your UTM-tracked URL dynamically based on the product
-            const contentParam = productId.toLowerCase().replace(/\s+/g, '_'); // e.g., 'f001_promo'
-            // Construct WhatsApp message text
-
-            // 3. Construct clean WhatsApp message text with proper plain-text link spacing
+            const contentParam = productId.toLowerCase().replace(/\s+/g, '_');
             const trackedUrl = `${window.location.origin}/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
 
             const message =
@@ -316,9 +304,9 @@
             const whatsappUrl =
                 `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
 
-            // Open WhatsApp share link in a new tab/window
             window.open(whatsappUrl, '_blank');
         }
     </script>
 </body>
 </html>
+
