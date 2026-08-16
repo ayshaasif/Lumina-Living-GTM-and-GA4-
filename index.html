@@ -140,6 +140,8 @@
         ];
 
         // Render Product Cards with individual WhatsApp share buttons featuring SVG logo
+
+
         const grid = document.getElementById('product-grid');
         products.forEach(product => {
             const card = document.createElement('div');
@@ -264,6 +266,9 @@
 
             console.log("Tracked: share_on_whatsapp event for product", productName);
 
+            // 2. Define your UTM-tracked URL dynamically based on the product
+            const contentParam = productId.toLowerCase().replace(/\s+/g, '_'); // e.g., 'f001_promo'
+            const trackedUrl = `https://lumina-living-tau.vercel.app/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
             // Construct WhatsApp message text
             // 2. Define your UTM-tracked URL dynamically based on the product
             const contentParam = productId.toLowerCase(); // e.g., 'f001_promo'
