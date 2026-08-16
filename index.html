@@ -270,9 +270,6 @@
             const contentParam = productId.toLowerCase().replace(/\s+/g, '_'); // e.g., 'f001_promo'
             const trackedUrl = `https://lumina-living-tau.vercel.app/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
             // Construct WhatsApp message text
-            // 2. Define your UTM-tracked URL dynamically based on the product
-            const contentParam = productId.toLowerCase(); // e.g., 'f001_promo'
-            const trackedUrl = `${window.location.origin}/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
 
             // 3. Construct clean WhatsApp message text with proper plain-text link spacing
             let message = `*Check out this item from Lumina Contract*%0A`;
