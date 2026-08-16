@@ -213,44 +213,77 @@
                 observer.observe(card);
             });
         });
-        // Helper to auto-select item in dropdown when clicked from card
+        // 1. Function to auto-populate product name when clicking 'Request Spec & Quote' on a card
         function selectProductForQuote(productName) {
-            document.getElementById('selectedProduct').value = productName;
+            const productInput = document.getElementById('selectedProduct');
+            if (productInput) {
+                productInput.value = productName;
+            }
         }
 
-        // Handle Form Submission and DataLayer push
-        function handleQuoteSubmit(event) {
+        // 2. Named submission handler matching onsubmit="handleQuoteSubmit(event)"
+        async function handleQuoteSubmit(event) {
             event.preventDefault();
-
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const companyType = document.getElementById('companyType').value;
-            const companyName = document.getElementById('companyName').value;
-            const product = document.getElementById('selectedProduct').value;
-            const quantity = document.getElementById('estimatedQuantity').value;
-
-            // Push custom B2B lead event to dataLayer for GTM/GA4 tracking
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: "trade_quote_submitted",
-                b2b_lead: {
-                    profession: companyType,
-                    company: companyName || "Not Provided",
-                    item_interest: product,
-                    estimated_qty: parseInt(quantity)
-                }
-            });
-
-            console.log("Tracked: trade_quote_submitted event for", companyType);
-
-            // Show success notification & reset form
-            document.getElementById('tradeQuoteForm').reset();
-            document.getElementById('success-banner').style.display = 'block';
             
-            // Scroll slightly to show success message
-            document.getElementById('success-banner').scrollIntoView({ behavior: 'smooth' });
-        }
+            const form = event.target;
+            const submitBtn = form.querySelector('#submitBtn') || document.getElementById('submitBtn');
+            const statusMsg = document.getElementById('formStatus');
+            const productNameVal = document.getElementById('selectedProduct').value;
+            const userEmailVal = document.getElementById('email').value;
 
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+            }
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    if (statusMsg) {
+                        statusMsg.style.display = 'block';
+                        statusMsg.style.color = 'green';
+                        statusMsg.textContent = 'Thank you! Your quote request has been saved to Google Sheets successfully.';
+                    }
+                    form.reset();
+
+                    // Push Custom Conversion Event to GTM / GA4 DataLayer
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: "trade_quote_submitted",
+                        lead_details: {
+                            product: productNameVal,
+                            email: userEmailVal
+                        }
+                    });
+
+                } else {
+                if (statusMsg) {
+                        statusMsg.style.display = 'block';
+                        statusMsg.style.color = 'red';
+                        statusMsg.textContent = 'Oops! There was a problem submitting your form.';
+                    }
+                }
+            }
+            catch (error) {
+                if (statusMsg) {
+                    statusMsg.style.display = 'block';
+                    statusMsg.style.color = 'red';
+                    statusMsg.textContent = 'Network error. Please check your connection and try again.';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Quote Request';
+                }
+            }
+        }
+        
         // Individual Product WhatsApp Share & GTM Event Handler
         function shareProductOnWhatsApp(productId, productName, productPrice) {
             // Push custom event to dataLayer for GTM/GA4 tracking
