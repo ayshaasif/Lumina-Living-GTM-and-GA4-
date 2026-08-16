@@ -275,12 +275,20 @@
             // Construct WhatsApp message text
             // 3. Construct clean WhatsApp message text with proper plain-text link spacing
             let message = `*Check out this item from Lumina Contract*%0A`;
+            let productUrl = window.location.href + `?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${productId}`; // Current page URL
             message += `*Product:* ${productName}%0A`;
+<<<<<<< HEAD
             message += `*Pricing:* ${productPrice}%0A%0A`;
             message += `👉 *Tap to view specs & details:*%0A`;
             message += `${trackedUrl}`;
+=======
+            message += `*Pricing:* ${productPrice}%0A`;
+            // message += `View details here: ${productUrl}`;
+            message += `👉 *[View Product Details](${productUrl})*`;
+>>>>>>> 4ff7ecd884493244835d3d1d2a3bb461b33913a3
             // Open WhatsApp with pre-filled text and link
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`
+            console.log("Opening WhatsApp share URL:", productUrl);
             window.open(whatsappUrl, '_blank');
         }
     </script>
