@@ -268,19 +268,20 @@
 
             // 2. Define your UTM-tracked URL dynamically based on the product
             const contentParam = productId.toLowerCase().replace(/\s+/g, '_'); // e.g., 'f001_promo'
-            const trackedUrl = `https://lumina-living-tau.vercel.app/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
             // Construct WhatsApp message text
 
             // 3. Construct clean WhatsApp message text with proper plain-text link spacing
-            let message = `*Check out this item from Lumina Contract*%0A`;
-            message += `*Product:* ${productName}%0A`;
-            message += `*Pricing:* ${productPrice}%0A%0A`;
-            message += `👉 *Tap to view specs & details:*%0A`;
-            message += `${trackedUrl}`;
+            const trackedUrl = `${window.location.origin}/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
 
-            // 4. Open WhatsApp with pre-filled text and link
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
-            window.open(whatsappUrl, '_blank');
+            const message =
+                `*Check out this item from Lumina Contract*\n` +
+                `*Product:* ${productName}\n` +
+                `*Pricing:* ${productPrice}\n\n` +
+                `👉 *Tap to view specs & details:*\n` +
+                trackedUrl;
+
+            const whatsappUrl =
+                `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
         }
     </script>
 </body>
