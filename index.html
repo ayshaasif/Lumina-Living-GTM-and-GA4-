@@ -140,10 +140,17 @@
         ];
 
         // Render Product Cards with individual WhatsApp share buttons featuring SVG logo
+
+
         const grid = document.getElementById('product-grid');
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
+            // Add data attributes for impression tracking
+            card.setAttribute('data-product-id', product.id);
+            card.setAttribute('data-product-name', product.name);
+            card.setAttribute('data-product-price', product.price);
+
             card.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="product-image">
                 <div class="product-info">
@@ -164,6 +171,50 @@
             `;
             grid.appendChild(card);
         });
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+    // Check if browser supports IntersectionObserver
+        if (!('IntersectionObserver' in window)) return;
+
+        const observerOptions = {
+            root: null, // uses the viewport
+            rootMargin: '0px',
+            threshold: 0.5 // Triggers when 50% of the item is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const productId = card.getAttribute('data-product-id');
+                    const productName = card.getAttribute('data-product-name');
+                    const productPrice = card.getAttribute('data-product-price');
+
+                    // Push impression event to GTM dataLayer
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: "listing_impression",
+                        ecommerce: {
+                            items: [{
+                                item_id: productId,
+                                item_name: productName,
+                                price: productPrice
+                            }]
+                        }
+                    });
+
+                    // Stop observing once the impression has been tracked for this card
+                    observer.unobserve(card);
+                }
+            });
+        }, observerOptions);
+
+        // Target all product listing elements on the page
+        document.querySelectorAll('.product-card').forEach(card => {
+            observer.observe(card);
+        });
+    });
 
         // Helper to auto-select item in dropdown when clicked from card
         function selectProductForQuote(productName) {
@@ -218,12 +269,16 @@
 
             console.log("Tracked: share_on_whatsapp event for product", productName);
 
+            // 2. Define your UTM-tracked URL dynamically based on the product
+            const contentParam = productId.toLowerCase().replace(/\s+/g, '_'); // e.g., 'f001_promo'
+            const trackedUrl = `https://lumina-living-tau.vercel.app/?utm_source=whatsapp&utm_medium=social&utm_id=product_share&utm_content=${contentParam}_promo`;
             // Construct WhatsApp message text
+            // 3. Construct clean WhatsApp message text with proper plain-text link spacing
             let message = `*Check out this item from Lumina Contract*%0A`;
             message += `*Product:* ${productName}%0A`;
-            message += `*Pricing:* ${productPrice}%0A`;
-            message += `View details here: ${window.location.href}`;
-
+            message += `*Pricing:* ${productPrice}%0A%0A`;
+            message += `👉 *Tap to view specs & details:*%0A`;
+            message += `${trackedUrl}`;
             // Open WhatsApp with pre-filled text and link
             const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
             window.open(whatsappUrl, '_blank');
